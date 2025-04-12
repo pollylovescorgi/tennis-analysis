@@ -47,3 +47,30 @@ select "TOURNAMENT", count(distinct("WINNER_NATIONALITY")) as num_of_nat
 from mens_tennis_grand_slam_winner
 group by "TOURNAMENT" 
 ```
+6. Определить топ-5 теннисистов по общей сумме призовых за победы на ТБШ, при этом учитывая, что сумма призовых за одну победу в финале должна превышать 1 млн. 
+
+```python
+select "WINNER", SUM("WINNER_PRIZE") as sum_of_prize
+from mens_tennis_grand_slam_winner mtgsw 
+where "WINNER_PRIZE" > 1000000
+group by "WINNER" 
+order by sum_of_prize DESC
+limit 5
+```
+
+7. Вывести, сколько раз Новак Джокович выигрывал ТБШ в ранге первой ракетки мира. 
+
+```python
+select count("WINNER") as num_of_win
+from mens_tennis_grand_slam_winner mtgsw 
+where "WINNER" = 'Novak Djokovic' and "WINNER_ATP_RANKING" = 1
+```
+
+8. Определить, сколько раз на каждом ТБШ побеждал кто-то не из БИГ-3 (Новак Джокович, Рафаэль Надаль, Роджер Федерер) начиная с 2003 года. 
+
+```python
+select "TOURNAMENT", count("WINNER") as count_of_winners
+from mens_tennis_grand_slam_winner mtgsw 
+where "WINNER" not in ('Novak Djokovic', 'Rafael Nadal', 'Roger Federer') and "YEAR" >= 2003
+group by "TOURNAMENT" 
+```
