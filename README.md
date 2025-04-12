@@ -5,11 +5,13 @@
 
 1. Определить по каждому турниру Большого шлема количество победителей, которые играли в финале с сеяными теннисистами (пояснение: по правилам сеяных в теннисе 32, а сама система посева была введена в 2001 году).
 
+```python
 select "TOURNAMENT", COUNT("WINNER") as num_of_winners
 from mens_tennis_grand_slam_winner mtgsw 
 where "RUNNER-UP_ATP_RANKING" <= 32 and "YEAR" >= 2001
 group by "TOURNAMENT"
 order by num_of_winners DESC
+```
 
 2. Определить количество леворуких и праворуких теннисистов-победителей ТБШ. 
 
