@@ -1,7 +1,9 @@
 # tennis-analysis
 Анализ данных о победителях турниров Большого шлема с 1950 по 2023 гг. (в мужской сетке)
 
-Всем привет! Здесь собраны придуманные мной запросы для погружения в теннисную статистику в PostgreSQL 
+Всем привет! Здесь собраны придуманные мной запросы для погружения в теннисную статистику в PostgreSQL. 
+
+Вы можете скопировать готовые запросы или попробовать запустить свой код - достаточно владеть базовыми знаниями в SQL. 
 
 1. Определить по каждому турниру Большого шлема количество победителей, которые играли в финале с сеяными теннисистами (пояснение: по правилам сеяных в теннисе 32, а сама система посева была введена в 2001 году).
 
@@ -73,4 +75,22 @@ select "TOURNAMENT", count("WINNER") as count_of_winners
 from mens_tennis_grand_slam_winner mtgsw 
 where "WINNER" not in ('Novak Djokovic', 'Rafael Nadal', 'Roger Federer') and "YEAR" >= 2003
 group by "TOURNAMENT" 
+```
+9. Выяснить, представители каких наций успешны в теннисе (исходя из заработанных призовых на ТБШ). 
+
+```python
+select "WINNER_NATIONALITY", sum("WINNER_PRIZE" ) as sum_of_prize
+from mens_tennis_grand_slam_winner mtgsw 
+where "WINNER_PRIZE" > 1000000
+group by "WINNER_NATIONALITY" 
+order by sum_of_prize desc
+```
+
+10. На каком покрытии было сыграно наибольшее количество ТБШ? 
+
+```python
+select "TOURNAMENT_SURFACE",count("TOURNAMENT_SURFACE") as count_of_surf
+from mens_tennis_grand_slam_winner mtgsw 
+group by "TOURNAMENT_SURFACE" 
+order by count_of_surf desc
 ```
